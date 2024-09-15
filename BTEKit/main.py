@@ -2,8 +2,6 @@ import subprocess
 import shutil
 import os
 
-# 设置 scripts 文件夹的路径
-# 动态获取当前脚本所在的目录，并拼接得到 scripts 文件夹的路径
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.join(BASE_DIR, 'scripts')  # linux -- /public/home/weiyi22
 # scripts/test/etikt/etkit/script
@@ -49,11 +47,10 @@ bte_script_mapping = {
     # Calculate the scatter rate of absorption, emission, N and U process
     8: "BTE-T-inc.sh",  # Increase the temperature and do ShengBTE calculation, TEMP_INC need to be edited
     9: "BTE-T-inc-collect.sh",  # calculation results collection script, TEMP_INC need to be edited
-    10: "BTE-testQgrid.sh",  # 逐步增加格子点数，并检查其对 ShengBTE 计算结果（热导率张量）的影响，收集并分析热导率随格子点数变化的结果。
+    10: "BTE-testQgrid.sh",  
     11: "BTE-gruneisen.py"  # similar bandplot, for gruneisen
 }
 
-# BTE2quantity.sh 需要的额外 .py 文件映射
 bte_additional_files = {
     "BTE2quantity.sh": [
         "BTE-velocity.py",
@@ -85,7 +82,6 @@ born_script_mapping = {
 
 
 def execute_script(script_name):
-    """根据文件类型使用python或bash执行脚本。"""
     current_dir = os.getcwd()
     script_path = os.path.join(current_dir, script_name)
     try:
@@ -100,22 +96,18 @@ def execute_script(script_name):
 
 
 def copy_script(script_name):
-    """复制选定的脚本到当前目录，并赋予执行权限。如果需要，复制附带的 .py 文件。"""
     try:
         current_dir = os.getcwd()
         src_path = os.path.join(SCRIPTS_DIR, script_name)
         dest_path = os.path.join(current_dir, script_name)
 
-        # 复制主要脚本
         shutil.copy(src_path, dest_path)
         print(f"{script_name} has been generated in {current_dir}")
 
-        # 如果是 .sh 文件，赋予执行权限
         if script_name.endswith('.sh'):
             subprocess.run(f"chmod u+x {dest_path}", shell=True, check=True)
             print(f"Execution permission has been granted to {script_name}")
 
-        # 检查是否有额外的 .py 文件需要复制
         if script_name in bte_additional_files:
             for additional_file in bte_additional_files[script_name]:
                 src_additional_path = os.path.join(SCRIPTS_DIR, additional_file)
