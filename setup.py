@@ -19,5 +19,11 @@ setup(
     description="A toolkit for running scripts with easy selection interface",
     author="Guangzhao Qin, Yi Wei",
     author_email="qin.phys@gmail.com",
-    url="https://example.com",
+    url="https://github.com/gzqin/BTEkit",
+    classifiers=[
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",  # This specifies Linux
+],
+python_requires='>=3.6',
 )
