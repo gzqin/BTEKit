@@ -1,2 +1,2 @@
-# shengbte-kit
+# BTEkit
 Post-data processing for ShengBTE
