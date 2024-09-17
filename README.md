@@ -1,5 +1,5 @@
 # BTEkit
-Post-data processing for ShengBTE
+# Post-data processing for ShengBTE
 材料热输运性质的计算涉及包括VASP、Phonopy、Thirdorder以及ShengBTE等多个相关软件和程序的调用，且求解步骤涉及多个中间变量，过程复杂，各个软件之间的开发文档彼此独立，因此新用户很难快速掌握这些计算流程。尽管目前有vaspkit软件可用于处理VASP计算相关的文件生成与后处理，但其目前尚未包含加速热输运性质计算的功能，且无法应用于集群的并发作业提交场景。
 因此，经由秦光照老师、韦依等人共同努力，开发了一款新的BTEKit热输运性质模拟与分析计算平台BTEKit。总体程序采用python和shell语言编写，主要用于Linux系统下热输运性质计算过程中的数据预-后处理，并帮助使用者简明、快速地掌握集群中并发作业的批量提交方法，建立不同计算软件之间的使用桥梁。BTEKit的主要功能如下：
 
