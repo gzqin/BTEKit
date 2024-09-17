@@ -24,11 +24,16 @@ Post-data processing for ShengBTE
 （4）ShengBTE: ShengBTE (Sheng's Boltzmann Transport Equation solver) 是一款解决玻尔兹曼输运方程的软件，专门用于计算材料中的晶格热导率，能够预测在不同温度下材料的热传导特性。
 
 BTEKit支持Linux系统，对应集群可以是PBS或Slurm集群，需要在安装了python3.X的环境下运行（thirdorder软件包现已更新版本v1.1.3，支持在python3.X环境下运行）。
-安装方法与其他的python软件包类似，可以通过在Linux界面中键入以下命令行以完成安装。
+正式发布后安装方法与其他的python软件包类似，可以通过在Linux界面中键入以下命令行以完成安装。
 ```
 pip install BTEKit
 ```
-
+也可下载github文件进行本地安装：
+```
+unzip BTEKit-main.zip
+cd BTEKit-main
+pip install .
+```
 BTEKit支持在任意文件夹下调用，且无需修改bash环境变量，调用方式如下：
 ```
 (base) [user@server ~/BTEKit]$ btekit 
