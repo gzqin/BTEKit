@@ -530,3 +530,5 @@ Execution permission has been granted to cal_ela.sh
 ```
 执行完毕后会自动生成脚本cal_ela.sh。
 调用vaspkit-201可以生成不同应变范围内，不同应变方向对应的计算文件夹。接下来利用我们的脚本cal_ela.sh即可提交所有文件夹下的计算任务。
+# Citation
+2024SR1814360 软件著作权登记证书，国家版权局，登记日期：2024年11月18日，著作权人: 秦光照,韦依,田骐琨,刘晓强,陈艾伶
