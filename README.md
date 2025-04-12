@@ -532,4 +532,5 @@ Execution permission has been granted to cal_ela.sh
 调用vaspkit-201可以生成不同应变范围内，不同应变方向对应的计算文件夹。接下来利用我们的脚本cal_ela.sh即可提交所有文件夹下的计算任务。
 # Citation
 2024SR1814360 BTEKit热输运性质模拟与分析计算平台，软件著作权登记证书，国家版权局，登记日期：2024年11月18日，著作权人: 秦光照,韦依,田骐琨,刘晓强,陈艾伶
+
 Guangzhao Qin, Zhenzhen Qin, Wu-Zhang Fang, Li-Chuan Zhang, Sheng-Ying Yue, Qing-Bo Yan*, Ming Hu*, and Gang Su*, Diverse anisotropy of phonon transport in two-dimensional group IV-VI compounds: A comparative study, **Nanoscale 8, 11306 (2016)**; ESI Highly Cited Paper (TOP 100 cited articles published in Nanoscale in 2016);
