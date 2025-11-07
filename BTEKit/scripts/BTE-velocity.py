@@ -1,68 +1,42 @@
-import os
-import sys
 import math
 
-# omega_file = 'BTE.omega_full'   # radial frequency
-# vel_file = 'BTE.v_full'         # group velocity
-omega_file = 'BTE.omega'  # radial frequency
-vel_file = 'BTE.v'  # group velocity
+omega_file = 'BTE.omega'
+vel_file = 'BTE.v'
 
-# =========
-# READ DATA
-# =========
+# 读入数据
+with open(omega_file) as f:
+    omega_data = [float(x) for x in f.read().split() if x.strip()]
 
-omega = open(omega_file)  # omega
-omega_data = omega.read().split('\n')
-omega.close()
-vel = open(vel_file)  # velocity
-vel_data = vel.read().split('\n')
-vel.close()
+with open(vel_file) as f:
+    vel_data = [list(map(float, x.split())) for x in f.read().splitlines() if x.strip()]
 
-# ===========
-# OUTPUT DATA
-# ===========
+if len(omega_data) != len(vel_data):
+    print(f"Warning: length mismatch between omega ({len(omega_data)}) and velocity ({len(vel_data)})")
 
-NK = len(omega_data) - 1
-nband = len(omega_data[0].split())
-N = NK * nband
+class Data:
+    def __init__(self, omega, vx, vy, vz):
+        # 单位：rad/ps -> THz
+        self.freq = float(omega) / (2 * math.pi)
+        self.vx = abs(float(vx))
+        self.vy = abs(float(vy))
+        self.vz = abs(float(vz))
+        self.vel = math.sqrt(self.vx**2 + self.vy**2 + self.vz**2)
 
+# 逐行匹配
+data = [Data(o, *v) for o, v in zip(omega_data, vel_data)]
 
-class DATA:
-    def __init__(self, omega, vel_x, vel_y, vel_z):
-        self.omega = float(omega) / 2 / math.pi  # rad/ps --> THz
-        self.vel_x = abs(float(vel_x))
-        self.vel_y = abs(float(vel_y))
-        self.vel_z = abs(float(vel_z))
-        self.vel = math.sqrt(self.vel_x ** 2 + self.vel_y ** 2 + self.vel_z ** 2)
+# 按频率排序
+data.sort(key=lambda d: d.freq)
 
+# 输出结果
+print("#freq(THz)  vx  vy  vz  |v|")
+for d in data[:10]:  # 仅预览前10行
+    print(f"{d.freq:.4f}  {d.vx:.3e}  {d.vy:.3e}  {d.vz:.3e}  {d.vel:.3e}")
 
-data = []
+# 保存到文件
+with open("freq_velocity.dat", "w") as f:
+    f.write("#freq(THz)  vx  vy  vz  |v|\n")
+    for d in data:
+        f.write(f"{d.freq:.6f}  {d.vx:.6e}  {d.vy:.6e}  {d.vz:.6e}  {d.vel:.6e}\n")
 
-for i in range(1, NK):
-    omega = omega_data[i].split()
-    vel = vel_data[i].split()
-
-    # 检查 vel 列表是否有足够的数据
-    if len(vel) < 3 * nband:
-        print(f"Warning: Not enough velocity data for NK={i}")
-        continue
-
-    for j in range(0, nband):
-        try:
-            data.append(DATA(
-                omega[j],  # omega
-                vel[j + 0 * nband],  # vx
-                vel[j + 1 * nband],  # vy
-                vel[j + 2 * nband]  # vz
-            ))
-        except IndexError:
-            print(f"IndexError: Not enough data for band {j} at NK={i}")
-            continue
-
-# 按 omega 排序
-data.sort(key=lambda data: data.omega)
-
-# 输出数据
-print('#freq vx vy vz vel')
-for i in range(0, len(data)):
-    print(data[i].omega, data[i].vel_x, data[i].vel_y, data[i].vel_z, data[i].vel)
+print("✅ 输出已保存至 freq_velocity.dat")
